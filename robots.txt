@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://altamashfaraz.dev/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Disallow specific file types (if any)
+Disallow: /*.zip$
+Disallow: /altamash-portfolio.zip/
