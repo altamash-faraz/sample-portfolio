@@ -287,9 +287,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initialize resume functionality
-    setupResumeFeatures();
-
     // Scroll Event Listeners
     window.addEventListener('scroll', function() {
         highlightActiveNavLink();
@@ -751,29 +748,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Resume functionality
     function setupResumeFeatures() {
+        console.log('Setting up resume features...');
+        
         const resumeViewBtn = document.getElementById('resume-view-btn');
         const resumeDownloadBtn = document.getElementById('resume-download-btn');
         
-        // TODO: Replace these placeholder URLs with your actual Google Drive resume links
-        // Step 1: Upload your resume to Google Drive
-        // Step 2: Right-click on the file and select "Get link" 
-        // Step 3: Set permission to "Anyone with the link can view"
-        // Step 4: Copy the share link (it looks like: https://drive.google.com/file/d/FILE_ID/view?usp=sharing)
-        // Step 5: For viewing: Use the share link as is
-        // Step 6: For downloading: Replace 'file/d/FILE_ID/view?usp=sharing' with 'uc?export=download&id=FILE_ID'
+        console.log('Resume view button found:', resumeViewBtn);
+        console.log('Resume download button found:', resumeDownloadBtn);
         
-        // Example format:
-        // Share link: https://drive.google.com/file/d/1A2B3C4D5E6F7G8H9I0/view?usp=sharing
-        // View URL: https://drive.google.com/file/d/1A2B3C4D5E6F7G8H9I0/view
-        // Download URL: https://drive.google.com/uc?export=download&id=1A2B3C4D5E6F7G8H9I0
-        
+        // Resume URLs
         const resumeViewUrl = 'https://drive.google.com/file/d/1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD/view';
         const resumeDownloadUrl = 'https://drive.google.com/uc?export=download&id=1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD';
         
         if (resumeViewBtn) {
             resumeViewBtn.href = resumeViewUrl;
             resumeViewBtn.addEventListener('click', function(e) {
-                // Analytics tracking
                 console.log('Resume view clicked');
                 
                 // Add click animation
@@ -781,7 +770,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 150);
+                
+                // Show notification
+                showNotification('Opening resume...', 'info');
             });
+        } else {
+            console.error('Resume view button not found!');
         }
         
         if (resumeDownloadBtn) {
@@ -789,8 +783,6 @@ document.addEventListener('DOMContentLoaded', function() {
             resumeDownloadBtn.removeAttribute('href');
             resumeDownloadBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                // Analytics tracking
                 console.log('Resume download clicked');
                 
                 // Add click animation
@@ -799,128 +791,53 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.style.transform = '';
                 }, 150);
                 
-                // Show download notification
-                showNotification('Starting resume download...', 'info');
-                
-                // Try multiple download methods
+                // Start download process
                 downloadResume();
             });
+        } else {
+            console.error('Resume download button not found!');
         }
     }
     
-    // Enhanced download function with multiple fallback methods
+    // Simplified download function that should work reliably
     function downloadResume() {
+        console.log('Starting resume download...');
+        showNotification('Starting download...', 'info');
+        
         const fileId = '1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD';
         const fileName = 'Altamash_Faraz_Resume.pdf';
         
-        // Method 1: Try the most reliable Google Drive download URL
-        const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}&confirm=t`;
+        // Method 1: Try direct download
+        const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
         
-        // Method 2: Alternative format
-        const altUrl = `https://drive.usercontent.google.com/download?id=${fileId}&export=download`;
-        
-        // Try different approaches
-        tryDownloadMethod1(downloadUrl, fileName)
-            .catch(() => tryDownloadMethod2(altUrl, fileName))
-            .catch(() => tryDownloadMethod3(fileId))
-            .catch(() => showDownloadInstructions());
-    }
-    
-    // Method 1: Direct link with invisible anchor
-    function tryDownloadMethod1(url, fileName) {
-        return new Promise((resolve, reject) => {
-            try {
-                // Create a temporary link element
-                const link = document.createElement('a');
-                link.style.display = 'none';
-                link.href = url;
-                link.download = fileName;
-                link.target = '_blank';
-                
-                // Add to DOM, click, then remove
-                document.body.appendChild(link);
-                link.click();
-                
-                // Clean up after a delay
-                setTimeout(() => {
-                    document.body.removeChild(link);
-                    showNotification('Resume download started! Check your downloads folder.', 'success');
-                    resolve();
-                }, 500);
-                
-            } catch (error) {
-                console.log('Download method 1 failed:', error);
-                reject(error);
-            }
-        });
-    }
-    
-    // Method 2: Alternative URL format
-    function tryDownloadMethod2(url, fileName) {
-        return new Promise((resolve, reject) => {
-            try {
-                // Try with fetch to test if URL is accessible
-                window.open(url, '_blank');
-                showNotification('Opening resume download... If it doesn\'t start, try the backup link below.', 'info');
-                resolve();
-            } catch (error) {
-                console.log('Download method 2 failed:', error);
-                reject(error);
-            }
-        });
-    }
-    
-    // Method 3: Open Google Drive viewer and show instructions
-    function tryDownloadMethod3(fileId) {
-        return new Promise((resolve, reject) => {
-            try {
-                const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
-                window.open(viewUrl, '_blank');
-                
-                // Show helpful notification
-                setTimeout(() => {
-                    showNotification('Resume opened in Google Drive. Click the download button (⬇) in the top toolbar.', 'info');
-                }, 1000);
-                
-                resolve();
-            } catch (error) {
-                console.log('Download method 3 failed:', error);
-                reject(error);
-            }
-        });
-    }
-    
-    // Simple notification system for resume downloads
-    function showNotification(message, type = 'info') {
-        // Remove any existing notifications
-        const existingNotification = document.querySelector('.notification');
-        if (existingNotification) {
-            existingNotification.remove();
-        }
-        
-        const notification = document.createElement('div');
-        notification.className = `notification notification--${type}`;
-        notification.innerHTML = `
-            <div class="notification-content">
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            </div>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        // Show notification
-        setTimeout(() => {
-            notification.classList.add('notification--show');
-        }, 100);
-        
-        // Hide and remove notification after 3 seconds
-        setTimeout(() => {
-            notification.classList.remove('notification--show');
+        try {
+            // Create download link
+            const link = document.createElement('a');
+            link.href = directUrl;
+            link.download = fileName;
+            link.target = '_blank';
+            link.style.display = 'none';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show success message after delay
             setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 3000);
+                showNotification('Download started! Check your downloads folder.', 'success');
+            }, 1000);
+            
+        } catch (error) {
+            console.log('Direct download failed, trying fallback...');
+            
+            // Fallback: Open in Google Drive
+            const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
+            window.open(viewUrl, '_blank');
+            
+            setTimeout(() => {
+                showNotification('Resume opened in Google Drive. Click the download button (⬇) in the toolbar.', 'info');
+            }, 1000);
+        }
     }
     
     // Initialize resume features
