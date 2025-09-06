@@ -4,8 +4,8 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 
 ## 🔗 Quick Access
 
-| 🌐 **Live Portfolio** | 📂 **Repository** | 👤 **Profile** |
-|:---------------------:|:-----------------:|:---------------:|
+|                    🌐 **Live Portfolio**                     |                    📂 **Repository**                     |                   👤 **Profile**                    |
+| :----------------------------------------------------------: | :------------------------------------------------------: | :-------------------------------------------------: |
 | [Visit Website](https://altamash-faraz.github.io/portfolio/) | [View Code](https://github.com/altamash-faraz/portfolio) | [GitHub Profile](https://github.com/altamash-faraz) |
 
 🌐 **Live Portfolio:** [https://altamash-faraz.github.io/portfolio/](https://altamash-faraz.github.io/portfolio/)

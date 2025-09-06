@@ -198,6 +198,98 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize external links
     setupExternalLinks();
 
+    // Fallback function to show manual download instructions
+    function showDownloadInstructions() {
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            font-family: var(--font-family-base);
+        `;
+        
+        modal.innerHTML = `
+            <div style="
+                background: var(--color-surface);
+                border-radius: var(--radius-lg);
+                padding: var(--space-24);
+                max-width: 500px;
+                margin: var(--space-20);
+                text-align: center;
+                color: var(--color-text);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            ">
+                <h3 style="margin-bottom: var(--space-16); color: var(--color-primary);">
+                    <i class="fas fa-download"></i> Manual Download Required
+                </h3>
+                <p style="margin-bottom: var(--space-20); line-height: 1.6;">
+                    Automatic download failed. Please follow these steps:
+                </p>
+                <div style="text-align: left; margin-bottom: var(--space-20);">
+                    <p><strong>1.</strong> Click the "View Resume" button</p>
+                    <p><strong>2.</strong> In the Google Drive viewer, click the download icon (⬇)</p>
+                    <p><strong>3.</strong> Or right-click and select "Save As..."</p>
+                </div>
+                <div style="display: flex; gap: var(--space-12); justify-content: center;">
+                    <button id="openResumeBtn" style="
+                        background: var(--color-primary);
+                        color: var(--color-btn-primary-text);
+                        border: none;
+                        padding: var(--space-12) var(--space-20);
+                        border-radius: var(--radius-md);
+                        cursor: pointer;
+                        font-weight: 500;
+                    ">
+                        Open Resume
+                    </button>
+                    <button id="closeModalBtn" style="
+                        background: var(--color-secondary);
+                        color: var(--color-text);
+                        border: none;
+                        padding: var(--space-12) var(--space-20);
+                        border-radius: var(--radius-md);
+                        cursor: pointer;
+                        font-weight: 500;
+                    ">
+                        Close
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Add event listeners
+        const openResumeBtn = modal.querySelector('#openResumeBtn');
+        const closeModalBtn = modal.querySelector('#closeModalBtn');
+        
+        openResumeBtn.addEventListener('click', () => {
+            window.open('https://drive.google.com/file/d/1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD/view', '_blank');
+            document.body.removeChild(modal);
+        });
+        
+        closeModalBtn.addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+        
+        // Close on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+            }
+        });
+    }
+
+    // Initialize resume functionality
+    setupResumeFeatures();
+
     // Scroll Event Listeners
     window.addEventListener('scroll', function() {
         highlightActiveNavLink();
@@ -616,6 +708,223 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Listen for theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', handleThemePreference);
+
+    // Notification system
+    function showNotification(message, type = 'info') {
+        // Remove any existing notifications
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification--${type}`;
+        
+        const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-info-circle';
+        
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="${icon}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+
+        // Add to page
+        document.body.appendChild(notification);
+
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('notification--show');
+        }, 100);
+
+        // Hide notification after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('notification--show');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    // Resume functionality
+    function setupResumeFeatures() {
+        const resumeViewBtn = document.getElementById('resume-view-btn');
+        const resumeDownloadBtn = document.getElementById('resume-download-btn');
+        
+        // TODO: Replace these placeholder URLs with your actual Google Drive resume links
+        // Step 1: Upload your resume to Google Drive
+        // Step 2: Right-click on the file and select "Get link" 
+        // Step 3: Set permission to "Anyone with the link can view"
+        // Step 4: Copy the share link (it looks like: https://drive.google.com/file/d/FILE_ID/view?usp=sharing)
+        // Step 5: For viewing: Use the share link as is
+        // Step 6: For downloading: Replace 'file/d/FILE_ID/view?usp=sharing' with 'uc?export=download&id=FILE_ID'
+        
+        // Example format:
+        // Share link: https://drive.google.com/file/d/1A2B3C4D5E6F7G8H9I0/view?usp=sharing
+        // View URL: https://drive.google.com/file/d/1A2B3C4D5E6F7G8H9I0/view
+        // Download URL: https://drive.google.com/uc?export=download&id=1A2B3C4D5E6F7G8H9I0
+        
+        const resumeViewUrl = 'https://drive.google.com/file/d/1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD/view';
+        const resumeDownloadUrl = 'https://drive.google.com/uc?export=download&id=1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD';
+        
+        if (resumeViewBtn) {
+            resumeViewBtn.href = resumeViewUrl;
+            resumeViewBtn.addEventListener('click', function(e) {
+                // Analytics tracking
+                console.log('Resume view clicked');
+                
+                // Add click animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        }
+        
+        if (resumeDownloadBtn) {
+            // Remove href attribute to handle download manually
+            resumeDownloadBtn.removeAttribute('href');
+            resumeDownloadBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Analytics tracking
+                console.log('Resume download clicked');
+                
+                // Add click animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Show download notification
+                showNotification('Starting resume download...', 'info');
+                
+                // Try multiple download methods
+                downloadResume();
+            });
+        }
+    }
+    
+    // Enhanced download function with multiple fallback methods
+    function downloadResume() {
+        const fileId = '1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD';
+        const fileName = 'Altamash_Faraz_Resume.pdf';
+        
+        // Method 1: Try the most reliable Google Drive download URL
+        const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}&confirm=t`;
+        
+        // Method 2: Alternative format
+        const altUrl = `https://drive.usercontent.google.com/download?id=${fileId}&export=download`;
+        
+        // Try different approaches
+        tryDownloadMethod1(downloadUrl, fileName)
+            .catch(() => tryDownloadMethod2(altUrl, fileName))
+            .catch(() => tryDownloadMethod3(fileId))
+            .catch(() => showDownloadInstructions());
+    }
+    
+    // Method 1: Direct link with invisible anchor
+    function tryDownloadMethod1(url, fileName) {
+        return new Promise((resolve, reject) => {
+            try {
+                // Create a temporary link element
+                const link = document.createElement('a');
+                link.style.display = 'none';
+                link.href = url;
+                link.download = fileName;
+                link.target = '_blank';
+                
+                // Add to DOM, click, then remove
+                document.body.appendChild(link);
+                link.click();
+                
+                // Clean up after a delay
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    showNotification('Resume download started! Check your downloads folder.', 'success');
+                    resolve();
+                }, 500);
+                
+            } catch (error) {
+                console.log('Download method 1 failed:', error);
+                reject(error);
+            }
+        });
+    }
+    
+    // Method 2: Alternative URL format
+    function tryDownloadMethod2(url, fileName) {
+        return new Promise((resolve, reject) => {
+            try {
+                // Try with fetch to test if URL is accessible
+                window.open(url, '_blank');
+                showNotification('Opening resume download... If it doesn\'t start, try the backup link below.', 'info');
+                resolve();
+            } catch (error) {
+                console.log('Download method 2 failed:', error);
+                reject(error);
+            }
+        });
+    }
+    
+    // Method 3: Open Google Drive viewer and show instructions
+    function tryDownloadMethod3(fileId) {
+        return new Promise((resolve, reject) => {
+            try {
+                const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
+                window.open(viewUrl, '_blank');
+                
+                // Show helpful notification
+                setTimeout(() => {
+                    showNotification('Resume opened in Google Drive. Click the download button (⬇) in the top toolbar.', 'info');
+                }, 1000);
+                
+                resolve();
+            } catch (error) {
+                console.log('Download method 3 failed:', error);
+                reject(error);
+            }
+        });
+    }
+    
+    // Simple notification system for resume downloads
+    function showNotification(message, type = 'info') {
+        // Remove any existing notifications
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        const notification = document.createElement('div');
+        notification.className = `notification notification--${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('notification--show');
+        }, 100);
+        
+        // Hide and remove notification after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('notification--show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+    
+    // Initialize resume features
+    setupResumeFeatures();
 
 });
 
