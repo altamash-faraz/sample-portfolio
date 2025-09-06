@@ -6,15 +6,16 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 
 |                    🌐 **Live Portfolio**                     |                    📂 **Repository**                     |                   👤 **Profile**                    |
 | :----------------------------------------------------------: | :------------------------------------------------------: | :-------------------------------------------------: |
-| [Visit Website](https://altamash-faraz.github.io/portfolio/) | [View Code](https://github.com/altamash-faraz/portfolio) | [GitHub Profile](https://github.com/altamash-faraz) |
+| [Visit Website](https://altamash-faraz.github.io) | [View Code](https://github.com/altamash-faraz/portfolio) | [GitHub Profile](https://github.com/altamash-faraz) |
 
-🌐 **Live Portfolio:** [https://altamash-faraz.github.io/portfolio/](https://altamash-faraz.github.io/portfolio/)
+🌐 **Live Portfolio:** [https://altamash-faraz.github.io](https://altamash-faraz.github.io/portfolio/)
 
 ## 🚀 Features
 
 - **Modern Design**: Clean, professional design with dark theme
 - **Responsive Layout**: Optimized for all devices and screen sizes
 - **Interactive Elements**: Smooth animations and hover effects
+- **Resume Integration**: View and download resume with Google Drive integration
 - **Performance Optimized**: Fast loading with optimized assets
 - **Accessibility**: WCAG compliant with keyboard navigation support
 - **SEO Optimized**: Meta tags and semantic HTML structure
@@ -26,6 +27,7 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 - **Experience**: Professional timeline with achievements
 - **Projects**: Showcase of key projects with live demos
 - **Skills**: Technical skills organized by category
+- **Resume**: View and download professional resume
 - **Education**: Academic background and certifications
 - **Contact**: Multiple ways to get in touch
 
@@ -39,8 +41,14 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 
 ## 📊 Projects Featured
 
-1. **AI Resume Screening System** - Machine learning-powered recruitment tool
-2. **VisiOCR** - OCR-based visitor management system
+1. **AI Resume Screening System** - Machine learning-powered recruitment tool with 95%+ accuracy
+   - Live Demo: [ai-resume-screen.streamlit.app](https://ai-resume-screen.streamlit.app)
+   - Technology: Python, Streamlit, TF-IDF, Machine Learning
+   
+2. **VisiOCR** - OCR-based visitor management system with real-time processing
+   - Live Demo: [visiocr-y4rx.onrender.com](https://visiocr-y4rx.onrender.com)
+   - Technology: Python, Django, Tesseract OCR, OpenCV
+
 3. **Student-Alumni Platform** - Networking platform for educational institutions
 4. **VotePro** - Secure polling application with OTP verification
 5. **Travel Blog Website** - Responsive frontend showcase
@@ -51,6 +59,9 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 - Smooth scrolling navigation
 - Interactive project cards with stats
 - Timeline with achievement highlights
+- Resume view/download functionality
+- Google Drive integration
+- Notification system for user feedback
 - Keyboard navigation support
 - Reduced motion support for accessibility
 
