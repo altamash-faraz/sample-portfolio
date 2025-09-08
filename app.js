@@ -799,51 +799,231 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Simplified download function that should work reliably
+    // Enhanced download function with multiple fallback methods
     function downloadResume() {
         console.log('Starting resume download...');
-        showNotification('Starting download...', 'info');
+        showNotification('Preparing download...', 'info');
         
         const fileId = '1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD';
         const fileName = 'Altamash_Faraz_Resume.pdf';
         
-        // Method 1: Try direct download
-        const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+        // Method 1: Try Google Drive direct download (new format)
+        const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}&confirm=t`;
         
-        try {
-            // Create download link
-            const link = document.createElement('a');
-            link.href = directUrl;
-            link.download = fileName;
-            link.target = '_blank';
-            link.style.display = 'none';
+        // Method 2: Create invisible iframe for download
+        const downloadWithIframe = () => {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = directUrl;
+            document.body.appendChild(iframe);
             
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Show success message after delay
             setTimeout(() => {
-                showNotification('Download started! Check your downloads folder.', 'success');
-            }, 1000);
+                document.body.removeChild(iframe);
+                showNotification('Download initiated! If it doesn\'t start, try the view button.', 'success');
+            }, 2000);
+        };
+        
+        // Method 3: Fetch and create blob (most reliable)
+        const downloadWithFetch = async () => {
+            try {
+                showNotification('Fetching resume file...', 'info');
+                
+                // Use the export URL for PDF
+                const response = await fetch(`https://drive.google.com/uc?export=download&id=${fileId}`);
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = fileName;
+                link.style.display = 'none';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Clean up
+                window.URL.revokeObjectURL(url);
+                showNotification('Resume downloaded successfully!', 'success');
+                
+            } catch (error) {
+                console.log('Fetch download failed:', error);
+                // Fallback to iframe method
+                downloadWithIframe();
+            }
+        };
+        
+        // Try fetch method first, then fallback to iframe
+        downloadWithFetch().catch(() => {
+            console.log('All download methods failed, opening in Google Drive...');
             
-        } catch (error) {
-            console.log('Direct download failed, trying fallback...');
-            
-            // Fallback: Open in Google Drive
+            // Final fallback: Open in Google Drive
             const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
             window.open(viewUrl, '_blank');
             
             setTimeout(() => {
-                showNotification('Resume opened in Google Drive. Click the download button (⬇) in the toolbar.', 'info');
+                showNotification('Resume opened in Google Drive. Click the download button (⬇) in the toolbar to download.', 'info');
             }, 1000);
-        }
+        });
     }
     
     // Initialize resume features
     setupResumeFeatures();
+    
+    // Initialize enhanced animations
+    initializeEnhancedAnimations();
 
 });
+
+// Enhanced Animation System
+function initializeEnhancedAnimations() {
+    console.log('Initializing enhanced animations...');
+    
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-visible');
+                // Optional: unobserve after animation to improve performance
+                // animationObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Add animation classes to elements that should animate on scroll
+    const animateElements = document.querySelectorAll('.card, .project-card, .experience-item, .skill-category, .section-title, .section-subtitle');
+    
+    animateElements.forEach((element, index) => {
+        element.classList.add('animate-on-scroll');
+        
+        // Add staggered delay for multiple elements
+        if (element.parentElement?.children.length > 1) {
+            const delay = (index % 4) + 1; // Cycles through delay-1 to delay-4
+            element.classList.add(`animate-delay-${delay}`);
+        }
+        
+        animationObserver.observe(element);
+    });
+    
+    // Enhanced button interactions
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        // Add hover lift effect
+        button.classList.add('hover-lift');
+        
+        // Add ripple effect on click
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Add floating animation to hero elements
+    const heroTitle = document.querySelector('.hero-title');
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    
+    if (heroTitle) heroTitle.classList.add('animate-float');
+    if (heroSubtitle) heroSubtitle.classList.add('animate-fade-in-up', 'animate-delay-2');
+    
+    // Enhanced card hover effects
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.classList.add('hover-lift', 'hover-glow');
+        
+        // Add subtle tilt effect on hover
+        card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+            
+            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+    
+    // Smooth parallax effect for sections
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll('.parallax');
+        
+        parallaxElements.forEach(element => {
+            const speed = element.dataset.speed || 0.5;
+            const yPos = -(scrolled * speed);
+            element.style.transform = `translateY(${yPos}px)`;
+        });
+    });
+    
+    console.log('Enhanced animations initialized successfully!');
+}
+
+// CSS for ripple effect (injected dynamically)
+function injectRippleStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            z-index: 1;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .parallax {
+            will-change: transform;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Initialize ripple styles when DOM is ready
+document.addEventListener('DOMContentLoaded', injectRippleStyles);
 
 // Utility function for smooth scrolling to any element
 function scrollToElement(elementId, offset = 70) {
