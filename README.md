@@ -60,10 +60,6 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 - Interactive project cards with stats
 - Timeline with achievement highlights
 - Resume view/download functionality
-- Google Drive integration
-- Notification system for user feedback
-- Keyboard navigation support
-- Reduced motion support for accessibility
 
 ## 📈 Performance
 
