@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #1a1a1a; color: white; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #333; border-radius: 8px; }
+        .test-button { 
+            background: #60a5fa; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .test-button:hover { background: #3b82f6; }
+        #results { background: #111; padding: 15px; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Portfolio Navigation & Resume Debug Test</h1>
+    
+    <div class="test-section">
+        <h2>Navigation Test</h2>
+        <p>Test if navigation links work on the main portfolio:</p>
+        <a href="index.html#about" class="test-button">Test About Link</a>
+        <a href="index.html#projects" class="test-button">Test Projects Link</a>
+        <a href="index.html#resume-section" class="test-button">Test Resume Link</a>
+        <a href="index.html#contact" class="test-button">Test Contact Link</a>
+    </div>
+    
+    <div class="test-section">
+        <h2>Resume Download Test</h2>
+        <p>Test the resume download functionality:</p>
+        <button class="test-button" onclick="testResumeDownload()">Test Resume Download</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Alternative Resume Access</h2>
+        <p>Direct links to resume:</p>
+        <a href="https://drive.google.com/file/d/1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD/view?usp=sharing" 
+           target="_blank" class="test-button">View Resume (Google Drive)</a>
+        <a href="https://drive.google.com/uc?export=download&id=1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD" 
+           class="test-button" download="Altamash_Faraz_Resume.pdf">Direct Download</a>
+    </div>
+
+    <div id="results">
+        <h3>Test Results:</h3>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `<div>[${time}] ${message}</div>`;
+            console.log(message);
+        }
+
+        function testResumeDownload() {
+            log('Testing resume download...');
+            
+            const fileId = '1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD';
+            const fileName = 'Altamash_Faraz_Resume.pdf';
+            const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+            
+            try {
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = fileName;
+                link.target = '_blank';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                log('Resume download triggered successfully!');
+            } catch (error) {
+                log('Error in resume download: ' + error.message);
+            }
+        }
+
+        // Test navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Debug page loaded successfully');
+            
+            // Check if main portfolio page exists
+            fetch('index.html')
+                .then(response => {
+                    if (response.ok) {
+                        log('Main portfolio page (index.html) is accessible');
+                    } else {
+                        log('Warning: Cannot access index.html');
+                    }
+                })
+                .catch(error => {
+                    log('Error checking index.html: ' + error.message);
+                });
+        });
+    </script>
+</body>
+</html>

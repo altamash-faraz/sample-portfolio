@@ -18,6 +18,16 @@ build/
 # IDE files
 .vscode/
 .idea/
+
+# Certificates and personal documents
+certificates/
+*.pdf
+*.doc
+*.docx
+
+# Documentation files
+RESUME_*.md
+SETUP_*.md
 *.swp
 *.swo
 *~

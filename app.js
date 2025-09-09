@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Smooth Scrolling for Navigation Links (only internal links)
+    // Enhanced Smooth Scrolling for Navigation Links (with fallback)
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -40,20 +40,33 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only apply smooth scrolling to internal anchor links
             if (href && href.startsWith('#')) {
                 e.preventDefault();
-                const targetSection = document.querySelector(href);
+                const targetId = href.substring(1);
+                const targetSection = document.getElementById(targetId);
                 
                 if (targetSection) {
-                    const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
+                    console.log(`Navigating to section: ${targetId}`);
+                    
+                    try {
+                        // Try smooth scrolling first
+                        const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    } catch (error) {
+                        console.warn('Smooth scrolling failed, using fallback:', error);
+                        // Fallback to instant scroll
+                        const offsetTop = targetSection.offsetTop - 70;
+                        window.scrollTo(0, offsetTop);
+                    }
+                } else {
+                    console.error(`Section not found: ${targetId}`);
                 }
             }
         });
     });
 
-    // Smooth scrolling for hero buttons
+    // Enhanced smooth scrolling for hero buttons (with fallback)
     const heroButtons = document.querySelectorAll('.hero-buttons .btn');
     heroButtons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -62,14 +75,25 @@ document.addEventListener('DOMContentLoaded', function() {
             // Only apply smooth scrolling to internal anchor links
             if (href && href.startsWith('#')) {
                 e.preventDefault();
-                const targetSection = document.querySelector(href);
+                const targetId = href.substring(1);
+                const targetSection = document.getElementById(targetId);
                 
                 if (targetSection) {
-                    const offsetTop = targetSection.offsetTop - 70;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
+                    console.log(`Hero button navigating to section: ${targetId}`);
+                    
+                    try {
+                        const offsetTop = targetSection.offsetTop - 70;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    } catch (error) {
+                        console.warn('Smooth scrolling failed, using fallback:', error);
+                        const offsetTop = targetSection.offsetTop - 70;
+                        window.scrollTo(0, offsetTop);
+                    }
+                } else {
+                    console.error(`Section not found: ${targetId}`);
                 }
             }
         });
@@ -799,77 +823,50 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Enhanced download function with multiple fallback methods
+    // Enhanced resume download function with multiple fallbacks
     function downloadResume() {
         console.log('Starting resume download...');
-        showNotification('Preparing download...', 'info');
+        showNotification('Opening resume for download...', 'info');
         
         const fileId = '1R1XGazRsPXy48cFLzTPF53ofiIa_KxjD';
         const fileName = 'Altamash_Faraz_Resume.pdf';
         
-        // Method 1: Try Google Drive direct download (new format)
-        const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}&confirm=t`;
-        
-        // Method 2: Create invisible iframe for download
-        const downloadWithIframe = () => {
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = directUrl;
-            document.body.appendChild(iframe);
+        try {
+            // Method 1: Try direct download link
+            const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
             
+            // Create a temporary link and click it
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.download = fileName;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            
+            // Add to DOM temporarily
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            console.log('Resume download method 1 triggered');
+            
+            // Show success message
             setTimeout(() => {
-                document.body.removeChild(iframe);
-                showNotification('Download initiated! If it doesn\'t start, try the view button.', 'success');
-            }, 2000);
-        };
-        
-        // Method 3: Fetch and create blob (most reliable)
-        const downloadWithFetch = async () => {
-            try {
-                showNotification('Fetching resume file...', 'info');
-                
-                // Use the export URL for PDF
-                const response = await fetch(`https://drive.google.com/uc?export=download&id=${fileId}`);
-                
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = fileName;
-                link.style.display = 'none';
-                
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                // Clean up
-                window.URL.revokeObjectURL(url);
-                showNotification('Resume downloaded successfully!', 'success');
-                
-            } catch (error) {
-                console.log('Fetch download failed:', error);
-                // Fallback to iframe method
-                downloadWithIframe();
-            }
-        };
-        
-        // Try fetch method first, then fallback to iframe
-        downloadWithFetch().catch(() => {
-            console.log('All download methods failed, opening in Google Drive...');
-            
-            // Final fallback: Open in Google Drive
-            const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
-            window.open(viewUrl, '_blank');
-            
-            setTimeout(() => {
-                showNotification('Resume opened in Google Drive. Click the download button (⬇) in the toolbar to download.', 'info');
+                showNotification('Download started! If download doesn\'t begin automatically, try the alternative link.', 'success');
             }, 1000);
-        });
+            
+        } catch (error) {
+            console.error('Resume download failed:', error);
+            
+            // Fallback: Open in new tab
+            try {
+                const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
+                window.open(viewUrl, '_blank', 'noopener,noreferrer');
+                showNotification('Resume opened in new tab. Use the download button in Google Drive.', 'warning');
+            } catch (fallbackError) {
+                console.error('Fallback method also failed:', fallbackError);
+                showNotification('Unable to download resume. Please contact me directly.', 'error');
+            }
+        }
     }
     
     // Initialize resume features
