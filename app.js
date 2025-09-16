@@ -2,6 +2,31 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Smooth scroll fallback function for older browsers
+    function smoothScrollTo(targetY, duration = 800) {
+        const startY = window.pageYOffset;
+        const difference = targetY - startY;
+        const startTime = performance.now();
+        
+        function step(currentTime) {
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Easing function (ease-in-out-cubic)
+            const ease = progress < 0.5 
+                ? 4 * progress * progress * progress 
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+            
+            window.scrollTo(0, startY + (difference * ease));
+            
+            if (timeElapsed < duration) {
+                requestAnimationFrame(step);
+            }
+        }
+        
+        requestAnimationFrame(step);
+    }
+    
     // Mobile Navigation Toggle
     const hamburger = document.querySelector('.nav-hamburger');
     const navMenu = document.querySelector('.nav-menu');
@@ -32,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Enhanced Smooth Scrolling for Navigation Links (with fallback)
+    // Enhanced Smooth Scrolling for Navigation Links (with improved reliability)
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -46,18 +71,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (targetSection) {
                     console.log(`Navigating to section: ${targetId}`);
                     
+                    // Remove active class from all nav links
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Calculate offset with more precision
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const offsetTop = targetSection.offsetTop - navbarHeight - 10; // Extra 10px padding
+                    
                     try {
-                        // Try smooth scrolling first
-                        const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
-                        window.scrollTo({
-                            top: offsetTop,
-                            behavior: 'smooth'
-                        });
+                        // Enhanced smooth scrolling with better browser support
+                        if ('scrollBehavior' in document.documentElement.style) {
+                            window.scrollTo({
+                                top: Math.max(0, offsetTop),
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            // Fallback smooth scroll for older browsers
+                            smoothScrollTo(Math.max(0, offsetTop), 800);
+                        }
                     } catch (error) {
-                        console.warn('Smooth scrolling failed, using fallback:', error);
-                        // Fallback to instant scroll
-                        const offsetTop = targetSection.offsetTop - 70;
-                        window.scrollTo(0, offsetTop);
+                        console.warn('Smooth scrolling failed, using instant scroll:', error);
+                        window.scrollTo(0, Math.max(0, offsetTop));
                     }
                 } else {
                     console.error(`Section not found: ${targetId}`);
@@ -66,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Enhanced smooth scrolling for hero buttons (with fallback)
+    // Enhanced smooth scrolling for hero buttons (with improved reliability)
     const heroButtons = document.querySelectorAll('.hero-buttons .btn');
     heroButtons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -81,16 +117,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (targetSection) {
                     console.log(`Hero button navigating to section: ${targetId}`);
                     
+                    // Calculate offset with navbar height
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const offsetTop = targetSection.offsetTop - navbarHeight - 10;
+                    
                     try {
-                        const offsetTop = targetSection.offsetTop - 70;
-                        window.scrollTo({
-                            top: offsetTop,
-                            behavior: 'smooth'
-                        });
+                        if ('scrollBehavior' in document.documentElement.style) {
+                            window.scrollTo({
+                                top: Math.max(0, offsetTop),
+                                behavior: 'smooth'
+                            });
+                        } else {
+                            smoothScrollTo(Math.max(0, offsetTop), 800);
+                        }
                     } catch (error) {
-                        console.warn('Smooth scrolling failed, using fallback:', error);
-                        const offsetTop = targetSection.offsetTop - 70;
-                        window.scrollTo(0, offsetTop);
+                        console.warn('Smooth scrolling failed, using instant scroll:', error);
+                        window.scrollTo(0, Math.max(0, offsetTop));
                     }
                 } else {
                     console.error(`Section not found: ${targetId}`);
@@ -99,29 +141,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Active Navigation Link Highlighting
+    // Enhanced Active Navigation Link Highlighting
     const sections = document.querySelectorAll('section');
     const navBar = document.querySelector('.navbar');
 
     function highlightActiveNavLink() {
         let current = '';
+        const scrollPos = window.pageYOffset + 100; // Account for navbar height
+        
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
+            const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
-            if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                current = sectionId;
             }
         });
 
+        // If we're at the very top, highlight home
+        if (window.pageYOffset < 100) {
+            current = 'home';
+        }
+
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === `#${current}`) {
                 link.classList.add('active');
             }
         });
     }
 
-    // Back to Top Button
+    // Enhanced Back to Top Button
     const backToTopBtn = document.getElementById('backToTop');
 
     function toggleBackToTopButton() {
@@ -132,12 +184,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            try {
+                if ('scrollBehavior' in document.documentElement.style) {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    smoothScrollTo(0, 800);
+                }
+            } catch (error) {
+                window.scrollTo(0, 0);
+            }
+            
+            // Reset active nav link to home
+            navLinks.forEach(link => link.classList.remove('active'));
+            const homeLink = document.querySelector('.nav-link[href="#home"]');
+            if (homeLink) homeLink.classList.add('active');
         });
-    });
+    }
 
     // Navbar Background on Scroll
     function updateNavbarBackground() {
