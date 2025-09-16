@@ -49,9 +49,8 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
    - Live Demo: [visiocr-y4rx.onrender.com](https://visiocr-y4rx.onrender.com)
    - Technology: Python, Django, Tesseract OCR, OpenCV
 
-3. **Student-Alumni Platform** - Networking platform for educational institutions
-4. **VotePro** - Secure polling application with OTP verification
-5. **Travel Blog Website** - Responsive frontend showcase
+3. **VotePro** - Secure polling application with OTP verification
+4. **Travel Blog Website** - Responsive frontend showcase
 
 ## 🎨 Design Features
 
