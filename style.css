@@ -1,53 +1,80 @@
 :root {
-  /* Modern Dark Theme Color Palette */
+  /* Enhanced Modern Dark Theme Color Palette */
   --color-white: rgba(255, 255, 255, 1);
   --color-black: rgba(0, 0, 0, 1);
   
-  /* Dark theme base colors */
-  --color-dark-900: rgba(7, 8, 12, 1);        /* Deep black */
-  --color-dark-800: rgba(13, 14, 20, 1);      /* Dark background */
-  --color-dark-700: rgba(20, 22, 30, 1);      /* Card backgrounds */
-  --color-dark-600: rgba(30, 32, 42, 1);      /* Elevated surfaces */
-  --color-dark-500: rgba(45, 48, 60, 1);      /* Border color */
-  --color-dark-400: rgba(65, 68, 80, 1);      /* Muted elements */
+  /* Enhanced dark theme base colors with deeper richness */
+  --color-dark-950: rgba(2, 6, 15, 1);        /* Ultra deep midnight */
+  --color-dark-900: rgba(8, 12, 23, 1);       /* Deep black with blue undertone */
+  --color-dark-800: rgba(15, 20, 35, 1);      /* Rich dark background */
+  --color-dark-700: rgba(22, 28, 45, 1);      /* Premium card backgrounds */
+  --color-dark-600: rgba(32, 40, 60, 1);      /* Elevated surfaces */
+  --color-dark-500: rgba(48, 58, 80, 1);      /* Enhanced border color */
+  --color-dark-400: rgba(70, 80, 100, 1);     /* Refined muted elements */
   
-  /* Gray scale for text */
-  --color-gray-100: rgba(245, 246, 250, 1);   /* Primary text */
-  --color-gray-200: rgba(229, 231, 235, 1);   /* High contrast text */
-  --color-gray-300: rgba(209, 213, 219, 1);   /* Medium contrast text */
-  --color-gray-400: rgba(156, 163, 175, 1);   /* Secondary text */
-  --color-gray-500: rgba(107, 114, 128, 1);   /* Muted text */
-  --color-gray-600: rgba(75, 85, 99, 1);      /* Disabled text */
+  /* Enhanced gray scale with better contrast */
+  --color-gray-50: rgba(248, 250, 252, 1);    /* Pure white text */
+  --color-gray-100: rgba(241, 245, 249, 1);   /* Primary text - enhanced */
+  --color-gray-200: rgba(226, 232, 240, 1);   /* High contrast text - improved */
+  --color-gray-300: rgba(203, 213, 225, 1);   /* Medium contrast text - refined */
+  --color-gray-400: rgba(148, 163, 184, 1);   /* Secondary text - enhanced */
+  --color-gray-500: rgba(100, 116, 139, 1);   /* Muted text - improved */
+  --color-gray-600: rgba(71, 85, 105, 1);     /* Disabled text - refined */
   
-  /* Vibrant accent colors */
-  --color-accent-primary: rgba(96, 165, 250, 1);      /* Bright blue */
-  --color-accent-primary-dark: rgba(59, 130, 246, 1); /* Darker blue */
-  --color-accent-secondary: rgba(139, 92, 246, 1);    /* Purple */
-  --color-accent-tertiary: rgba(34, 197, 94, 1);      /* Green */
-  --color-accent-warning: rgba(251, 146, 60, 1);      /* Orange */
-  --color-accent-danger: rgba(248, 113, 113, 1);      /* Red */
+  /* Vibrant modern accent colors - enhanced palette */
+  --color-primary: rgba(56, 189, 248, 1);        /* Brilliant cyan blue */
+  --color-primary-light: rgba(125, 211, 252, 1); /* Light cyan */
+  --color-primary-dark: rgba(14, 165, 233, 1);   /* Deep cyan */
   
-  /* Gradient colors */
-  --gradient-primary: linear-gradient(135deg, rgba(96, 165, 250, 1) 0%, rgba(139, 92, 246, 1) 100%);
+  --color-secondary: rgba(139, 92, 246, 1);      /* Rich purple */
+  --color-secondary-light: rgba(167, 139, 250, 1); /* Light purple */
+  --color-secondary-dark: rgba(109, 40, 217, 1);   /* Deep purple */
+  
+  --color-accent: rgba(236, 72, 153, 1);         /* Vibrant pink */
+  --color-accent-light: rgba(244, 114, 182, 1);  /* Light pink */
+  --color-accent-dark: rgba(190, 24, 93, 1);     /* Deep pink */
+  
+  --color-success: rgba(16, 185, 129, 1);        /* Modern green */
+  --color-success-light: rgba(52, 211, 153, 1);  /* Light green */
+  --color-success-dark: rgba(4, 120, 87, 1);     /* Deep green */
+  
+  --color-warning: rgba(245, 158, 11, 1);        /* Golden yellow */
+  --color-warning-light: rgba(251, 191, 36, 1);  /* Light yellow */
+  --color-warning-dark: rgba(180, 83, 9, 1);     /* Deep yellow */
+  
+  --color-danger: rgba(239, 68, 68, 1);          /* Modern red */
+  --color-danger-light: rgba(248, 113, 113, 1);  /* Light red */
+  --color-danger-dark: rgba(185, 28, 28, 1);     /* Deep red */
+  
+  /* Enhanced gradient combinations */
+  --gradient-primary: linear-gradient(135deg, rgba(56, 189, 248, 1) 0%, rgba(139, 92, 246, 1) 100%);
   --gradient-secondary: linear-gradient(135deg, rgba(139, 92, 246, 1) 0%, rgba(236, 72, 153, 1) 100%);
-  --gradient-tertiary: linear-gradient(135deg, rgba(34, 197, 94, 1) 0%, rgba(59, 130, 246, 1) 100%);
+  --gradient-tertiary: linear-gradient(135deg, rgba(16, 185, 129, 1) 0%, rgba(56, 189, 248, 1) 100%);
+  --gradient-warm: linear-gradient(135deg, rgba(245, 158, 11, 1) 0%, rgba(239, 68, 68, 1) 100%);
+  --gradient-cool: linear-gradient(135deg, rgba(56, 189, 248, 1) 0%, rgba(16, 185, 129, 1) 100%);
+  --gradient-vibrant: linear-gradient(135deg, rgba(236, 72, 153, 1) 0%, rgba(139, 92, 246, 1) 50%, rgba(56, 189, 248, 1) 100%);
   
-  /* RGB versions for opacity control */
-  --color-accent-primary-rgb: 96, 165, 250;
-  --color-accent-secondary-rgb: 139, 92, 246;
-  --color-accent-tertiary-rgb: 34, 197, 94;
-  --color-gray-100-rgb: 245, 246, 250;
-  --color-dark-700-rgb: 20, 22, 30;
+  /* RGB versions for enhanced opacity control */
+  --color-primary-rgb: 56, 189, 248;
+  --color-secondary-rgb: 139, 92, 246;
+  --color-accent-rgb: 236, 72, 153;
+  --color-success-rgb: 16, 185, 129;
+  --color-warning-rgb: 245, 158, 11;
+  --color-danger-rgb: 239, 68, 68;
+  --color-gray-50-rgb: 248, 250, 252;
+  --color-gray-100-rgb: 241, 245, 249;
+  --color-dark-700-rgb: 22, 28, 45;
+  --color-dark-800-rgb: 15, 20, 35;
 
-  /* Background variations with subtle gradients */
-  --color-bg-1: rgba(96, 165, 250, 0.05);  /* Blue tint */
-  --color-bg-2: rgba(139, 92, 246, 0.05);  /* Purple tint */
-  --color-bg-3: rgba(34, 197, 94, 0.05);   /* Green tint */
-  --color-bg-4: rgba(248, 113, 113, 0.05); /* Red tint */
-  --color-bg-5: rgba(236, 72, 153, 0.05);  /* Pink tint */
-  --color-bg-6: rgba(251, 146, 60, 0.05);  /* Orange tint */
+  /* Enhanced background variations with improved tints */
+  --color-bg-primary: rgba(56, 189, 248, 0.08);    /* Enhanced blue tint */
+  --color-bg-secondary: rgba(139, 92, 246, 0.08);  /* Enhanced purple tint */
+  --color-bg-accent: rgba(236, 72, 153, 0.08);     /* Enhanced pink tint */
+  --color-bg-success: rgba(16, 185, 129, 0.08);    /* Enhanced green tint */
+  --color-bg-warning: rgba(245, 158, 11, 0.08);    /* Enhanced orange tint */
+  --color-bg-danger: rgba(239, 68, 68, 0.08);      /* Enhanced red tint */
 
-  /* Semantic Color Tokens (Dark Mode) */
+  /* Semantic Color Tokens (Enhanced Dark Mode) */
   --color-background: var(--color-dark-900);
   --color-surface: var(--color-dark-800);
   --color-surface-elevated: var(--color-dark-700);
@@ -349,8 +376,13 @@ body {
   line-height: var(--line-height-normal);
   overflow-x: hidden;
   
-  /* Enhanced background with subtle gradient */
-  background: linear-gradient(135deg, var(--color-dark-900) 0%, var(--color-dark-800) 100%);
+  /* Enhanced background with rich gradient and subtle color hints */
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(var(--color-primary-rgb), 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(var(--color-secondary-rgb), 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(var(--color-accent-rgb), 0.04) 0%, transparent 50%),
+    linear-gradient(135deg, var(--color-dark-950) 0%, var(--color-dark-900) 50%, var(--color-dark-800) 100%);
+  background-attachment: fixed;
   
   /* Smooth transitions for all interactions */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -510,12 +542,37 @@ pre code {
   transition: all 0.1s ease;
 }
 
-/* Primary Button - Gradient Magic */
+/* Primary Button - Enhanced Gradient Magic */
 .btn--primary {
-  background: var(--gradient-primary);
+  background: var(--gradient-vibrant);
   color: var(--color-white);
   border: 2px solid transparent;
   position: relative;
+  z-index: 1;
+}
+
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-primary);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.btn--primary:hover::after {
+  opacity: 1;
+}
+
+.btn--primary:hover {
+  box-shadow: 0 8px 32px rgba(var(--color-primary-rgb), 0.3), 
+              0 4px 16px rgba(var(--color-secondary-rgb), 0.2);
+}
 }
 
 .btn--primary::after {
@@ -664,13 +721,18 @@ select.form-control {
   position: relative;
   overflow: hidden;
   
-  /* Enhanced shadow system */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 
-              0 1px 3px rgba(0, 0, 0, 0.08);
+  /* Enhanced shadow system with color variables */
+  box-shadow: 0 4px 6px rgba(var(--color-dark-rgb), 0.15), 
+              0 1px 3px rgba(var(--color-dark-rgb), 0.1);
   
   /* Smooth transitions */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateY(0) scale(1);
+  
+  /* Subtle gradient overlay */
+  background: linear-gradient(135deg, 
+    var(--color-surface-elevated) 0%, 
+    rgba(var(--color-primary-rgb), 0.02) 100%);
 }
 
 .card::before {
@@ -680,16 +742,21 @@ select.form-control {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent-primary), transparent);
+  background: var(--gradient-primary);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15), 
-              0 10px 10px rgba(0, 0, 0, 0.1);
-  border-color: var(--color-accent-primary);
+  box-shadow: 0 20px 25px rgba(var(--color-primary-rgb), 0.25), 
+              0 10px 10px rgba(var(--color-dark-rgb), 0.15);
+  border-color: var(--color-primary);
+  
+  /* Enhanced gradient on hover */
+  background: linear-gradient(135deg, 
+    var(--color-surface-elevated) 0%, 
+    rgba(var(--color-primary-rgb), 0.05) 100%);
 }
 
 .card:hover::before {
@@ -921,12 +988,18 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(31, 33, 33, 0.95);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(135deg, 
+    rgba(var(--color-dark-950-rgb), 0.95) 0%, 
+    rgba(var(--color-dark-900-rgb), 0.92) 100%);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(var(--color-primary-rgb), 0.1);
   z-index: 1000;
   transition: all var(--duration-normal) var(--ease-standard);
+  
+  /* Add subtle glow effect */
+  box-shadow: 0 1px 3px rgba(var(--color-primary-rgb), 0.1),
+              0 1px 2px rgba(var(--color-dark-rgb), 0.3);
 }
 
 .nav-container {
@@ -942,8 +1015,14 @@ body {
 .nav-logo .logo-text {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
   letter-spacing: var(--letter-spacing-tight);
+  
+  /* Enhanced gradient logo */
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .nav-menu {
@@ -970,8 +1049,9 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--color-primary);
+  background: var(--gradient-primary);
   transition: width var(--duration-normal) var(--ease-standard);
+  border-radius: 1px;
 }
 
 .nav-link:hover {
@@ -1016,18 +1096,33 @@ body {
 .hero-name {
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: var(--font-weight-bold);
-  color: var(--color-text);
   margin-bottom: var(--space-16);
   letter-spacing: -0.02em;
   line-height: var(--line-height-tight);
+  
+  /* Enhanced gradient text effect */
+  background: var(--gradient-vibrant);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  
+  /* Add subtle text shadow for depth */
+  filter: drop-shadow(0 2px 4px rgba(var(--color-primary-rgb), 0.2));
 }
 
 .hero-title {
   font-size: clamp(1.2rem, 4vw, 2rem);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
   margin-bottom: var(--space-24);
   letter-spacing: 0.05em;
+  
+  /* Enhanced gradient for subtitle */
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-tagline {
