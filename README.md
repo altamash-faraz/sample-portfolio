@@ -6,9 +6,9 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 
 |                    🌐 **Live Portfolio**                     |                    📂 **Repository**                     |                   👤 **Profile**                    |
 | :----------------------------------------------------------: | :------------------------------------------------------: | :-------------------------------------------------: |
-| [Visit Website](https://altamash-faraz.github.io/) | [View Code](https://github.com/altamash-faraz/portfolio) | [GitHub Profile](https://github.com/altamash-faraz) |
+| [Visit Website](https://altamashfaraz.me) | [View Code](https://github.com/altamashfaraz.me) | [GitHub Profile](https://github.com/altamash-faraz) |
 
-🌐 **Live Portfolio:** [https://altamash-faraz.github.io/](https://altamash-faraz.github.io/)
+🌐 **Live Portfolio:** [https://github.com/altamashfaraz.me](https://altamashfaraz.me)
 
 ## 🚀 Features
 
@@ -48,10 +48,9 @@ A modern, responsive portfolio website showcasing my work as a Python Developer 
 2. **VisiOCR** - OCR-based visitor management system with real-time processing
    - Live Demo: [visiocr-y4rx.onrender.com](https://visiocr-y4rx.onrender.com)
    - Technology: Python, Django, Tesseract OCR, OpenCV
-
-3. **Student-Alumni Platform** - Networking platform for educational institutions
-4. **VotePro** - Secure polling application with OTP verification
-5. **Travel Blog Website** - Responsive frontend showcase
+   - 
+3. **VotePro** - Secure polling application with OTP verification
+4. **Travel Blog Website** - Responsive frontend showcase
 
 ## 🎨 Design Features
 
