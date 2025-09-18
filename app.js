@@ -96,39 +96,84 @@ document.addEventListener('DOMContentLoaded', function() {
                 const targetId = href.substring(1);
                 const targetSection = document.getElementById(targetId);
                 
+                console.log(`Attempting to navigate to: ${targetId}`);
+                console.log(`Target section found:`, targetSection);
+                
                 if (targetSection) {
-                    console.log(`Navigating to section: ${targetId}`);
-                    
                     // Remove active class from all nav links
                     navLinks.forEach(navLink => navLink.classList.remove('active'));
                     // Add active class to clicked link
                     this.classList.add('active');
                     
-                    // Calculate offset with more precision
-                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                    const offsetTop = targetSection.offsetTop - navbarHeight - 10; // Extra 10px padding
+                    // Calculate offset with improved precision
+                    const navbar = document.querySelector('.navbar');
+                    const navbarHeight = navbar ? navbar.offsetHeight : 75;
+                    const elementRect = targetSection.getBoundingClientRect();
+                    const bodyRect = document.body.getBoundingClientRect();
+                    const elementTop = elementRect.top - bodyRect.top;
+                    const offsetTop = elementTop - navbarHeight - 20; // Extra 20px padding
                     
-                    try {
-                        // Enhanced smooth scrolling with better browser support
-                        if ('scrollBehavior' in document.documentElement.style) {
+                    console.log(`Navbar height: ${navbarHeight}`);
+                    console.log(`Element top: ${elementTop}`);
+                    console.log(`Calculated offset: ${offsetTop}`);
+                    
+                    // Use requestAnimationFrame for better performance
+                    requestAnimationFrame(() => {
+                        try {
+                            // Try modern smooth scrolling first
                             window.scrollTo({
                                 top: Math.max(0, offsetTop),
+                                left: 0,
                                 behavior: 'smooth'
                             });
-                        } else {
+                            console.log(`Successfully scrolled to ${targetId}`);
+                        } catch (error) {
+                            console.warn('Modern scroll failed, using fallback:', error);
                             // Fallback smooth scroll for older browsers
                             smoothScrollTo(Math.max(0, offsetTop), 800);
                         }
-                    } catch (error) {
-                        console.warn('Smooth scrolling failed, using instant scroll:', error);
-                        window.scrollTo(0, Math.max(0, offsetTop));
-                    }
+                    });
                 } else {
                     console.error(`Section not found: ${targetId}`);
+                    // Try alternative method - scroll to element by href
+                    const fallbackElement = document.querySelector(href);
+                    if (fallbackElement) {
+                        console.log(`Found element using querySelector: ${href}`);
+                        fallbackElement.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    }
                 }
             }
         });
     });
+
+    // Alternative navigation method as backup for debugging
+    function navigateToSection(sectionId) {
+        console.log(`Direct navigation to: ${sectionId}`);
+        const section = document.getElementById(sectionId);
+        if (section) {
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar ? navbar.offsetHeight : 75;
+            
+            // Use scrollIntoView with offset
+            const targetPosition = section.offsetTop - navbarHeight - 20;
+            console.log(`Direct scroll to position: ${targetPosition}`);
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            return true;
+        }
+        console.error(`Direct navigation failed - section ${sectionId} not found`);
+        return false;
+    }
+    
+    // Make navigation function globally available for debugging
+    window.navigateToSection = navigateToSection;
 
     // Enhanced smooth scrolling for hero buttons (with improved reliability)
     const heroButtons = document.querySelectorAll('.hero-buttons .btn');
