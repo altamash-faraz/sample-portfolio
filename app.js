@@ -85,95 +85,109 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Enhanced Smooth Scrolling for Navigation Links (with improved reliability)
+    // Simple and reliable navigation solution
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
+            e.preventDefault();
             
-            // Only apply smooth scrolling to internal anchor links
-            if (href && href.startsWith('#')) {
-                e.preventDefault();
-                const targetId = href.substring(1);
-                const targetSection = document.getElementById(targetId);
+            const href = this.getAttribute('href');
+            if (!href || !href.startsWith('#')) return;
+            
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            console.log(`Clicking nav link for: ${targetId}`);
+            
+            if (targetElement) {
+                // Remove active class from all links
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                // Add active class to current link
+                this.classList.add('active');
                 
-                console.log(`Attempting to navigate to: ${targetId}`);
-                console.log(`Target section found:`, targetSection);
+                // Get navbar height
+                const navbar = document.querySelector('.navbar');
+                const navbarHeight = navbar ? navbar.offsetHeight : 80;
                 
-                if (targetSection) {
-                    // Remove active class from all nav links
-                    navLinks.forEach(navLink => navLink.classList.remove('active'));
-                    // Add active class to clicked link
-                    this.classList.add('active');
-                    
-                    // Calculate offset with improved precision
-                    const navbar = document.querySelector('.navbar');
-                    const navbarHeight = navbar ? navbar.offsetHeight : 75;
-                    const elementRect = targetSection.getBoundingClientRect();
-                    const bodyRect = document.body.getBoundingClientRect();
-                    const elementTop = elementRect.top - bodyRect.top;
-                    const offsetTop = elementTop - navbarHeight - 20; // Extra 20px padding
-                    
-                    console.log(`Navbar height: ${navbarHeight}`);
-                    console.log(`Element top: ${elementTop}`);
-                    console.log(`Calculated offset: ${offsetTop}`);
-                    
-                    // Use requestAnimationFrame for better performance
-                    requestAnimationFrame(() => {
-                        try {
-                            // Try modern smooth scrolling first
-                            window.scrollTo({
-                                top: Math.max(0, offsetTop),
-                                left: 0,
-                                behavior: 'smooth'
-                            });
-                            console.log(`Successfully scrolled to ${targetId}`);
-                        } catch (error) {
-                            console.warn('Modern scroll failed, using fallback:', error);
-                            // Fallback smooth scroll for older browsers
-                            smoothScrollTo(Math.max(0, offsetTop), 800);
-                        }
-                    });
-                } else {
-                    console.error(`Section not found: ${targetId}`);
-                    // Try alternative method - scroll to element by href
-                    const fallbackElement = document.querySelector(href);
-                    if (fallbackElement) {
-                        console.log(`Found element using querySelector: ${href}`);
-                        fallbackElement.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'start' 
-                        });
+                // Calculate target position
+                const elementPosition = targetElement.offsetTop;
+                const offsetPosition = elementPosition - navbarHeight - 20;
+                
+                console.log(`Scrolling to ${targetId} at position: ${offsetPosition}`);
+                
+                // Simple scroll
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Fallback for older browsers
+                setTimeout(() => {
+                    if (Math.abs(window.pageYOffset - offsetPosition) > 50) {
+                        console.log('Fallback scroll triggered');
+                        window.scrollTo(0, offsetPosition);
                     }
-                }
+                }, 1000);
+            } else {
+                console.error(`Element not found: ${targetId}`);
             }
         });
     });
 
-    // Alternative navigation method as backup for debugging
-    function navigateToSection(sectionId) {
-        console.log(`Direct navigation to: ${sectionId}`);
-        const section = document.getElementById(sectionId);
-        if (section) {
+    // Direct navigation function for testing
+    window.testNavigation = function(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
             const navbar = document.querySelector('.navbar');
-            const navbarHeight = navbar ? navbar.offsetHeight : 75;
+            const navbarHeight = navbar ? navbar.offsetHeight : 80;
+            const position = element.offsetTop - navbarHeight - 20;
             
-            // Use scrollIntoView with offset
-            const targetPosition = section.offsetTop - navbarHeight - 20;
-            console.log(`Direct scroll to position: ${targetPosition}`);
+            console.log(`Testing navigation to ${sectionId}:`);
+            console.log(`Element found:`, element);
+            console.log(`Element offsetTop:`, element.offsetTop);
+            console.log(`Navbar height:`, navbarHeight);
+            console.log(`Final position:`, position);
             
             window.scrollTo({
-                top: targetPosition,
+                top: position,
                 behavior: 'smooth'
             });
             
             return true;
+        } else {
+            console.error(`Element ${sectionId} not found`);
+            return false;
         }
-        console.error(`Direct navigation failed - section ${sectionId} not found`);
-        return false;
-    }
+    };
     
-    // Make navigation function globally available for debugging
-    window.navigateToSection = navigateToSection;
+    // Test the specific problematic sections
+    console.log('Available sections:');
+    ['education', 'certificates', 'contact'].forEach(id => {
+        const element = document.getElementById(id);
+        console.log(`${id}: ${element ? 'FOUND' : 'NOT FOUND'}`);
+        if (element) {
+            console.log(`  Position: ${element.offsetTop}px`);
+        }
+    });
+    
+    // Add keyboard shortcuts for testing
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey) {
+            switch(e.key) {
+                case '1':
+                    e.preventDefault();
+                    testNavigation('education');
+                    break;
+                case '2':
+                    e.preventDefault();
+                    testNavigation('certificates');
+                    break;
+                case '3':
+                    e.preventDefault();
+                    testNavigation('contact');
+                    break;
+            }
+        }
+    });
 
     // Enhanced smooth scrolling for hero buttons (with improved reliability)
     const heroButtons = document.querySelectorAll('.hero-buttons .btn');
