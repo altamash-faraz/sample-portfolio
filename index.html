@@ -53,6 +53,52 @@
     />
 
     <link rel="stylesheet" href="style.css" />
+    
+    <!-- Direct Navigation Script -->
+    <script>
+    function scrollToSection(sectionId) {
+        console.log('Direct scroll to:', sectionId);
+        const element = document.getElementById(sectionId);
+        if (element) {
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar ? navbar.offsetHeight : 80;
+            const targetPosition = element.offsetTop - navbarHeight - 20;
+            
+            console.log('Element found, scrolling to position:', targetPosition);
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to current link
+            const activeLink = document.querySelector(`[data-section="${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Scroll to position
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            // Backup scroll for old browsers
+            setTimeout(() => {
+                if (Math.abs(window.pageYOffset - targetPosition) > 50) {
+                    window.scrollTo(0, targetPosition);
+                }
+            }, 1000);
+        } else {
+            console.error('Section not found:', sectionId);
+        }
+    }
+    
+    // Test function - can be called from console
+    window.testScroll = function(id) {
+        scrollToSection(id);
+    }
+    </script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -76,9 +122,9 @@
           <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
           <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
           <li><a href="#resume-section" class="nav-link" data-section="resume-section">Resume</a></li>
-          <li><a href="#education" class="nav-link" data-section="education">Education</a></li>
-          <li><a href="#certificates" class="nav-link" data-section="certificates">Certificates</a></li>
-          <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+          <li><a href="#education" class="nav-link" data-section="education" onclick="scrollToSection('education'); return false;">Education</a></li>
+          <li><a href="#certificates" class="nav-link" data-section="certificates" onclick="scrollToSection('certificates'); return false;">Certificates</a></li>
+          <li><a href="#contact" class="nav-link" data-section="contact" onclick="scrollToSection('contact'); return false;">Contact</a></li>
         </ul>
         <div class="nav-hamburger">
           <span class="bar"></span>
