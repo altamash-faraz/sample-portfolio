@@ -2,6 +2,34 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Navbar scroll effect
+    const navbar = document.querySelector('.navbar');
+    let lastScrollTop = 0;
+    
+    function handleNavbarScroll() {
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (currentScrollTop > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+    }
+    
+    // Add scroll listener with throttling
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(function() {
+                handleNavbarScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    
     // Smooth scroll fallback function for older browsers
     function smoothScrollTo(targetY, duration = 800) {
         const startY = window.pageYOffset;
