@@ -183,8 +183,6 @@
   --container-md: 768px;
   --container-lg: 1024px;
   --container-xl: 1280px;
-}
-
 /* Dark mode colors */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -598,6 +596,8 @@ pre code {
   background: rgba(96, 165, 250, 0.1);
   color: var(--color-accent-primary);
   border: 2px solid var(--color-accent-primary);
+  -webkit-backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -1512,6 +1512,7 @@ section {
 
 .project-card {
   background: rgba(30, 41, 59, 0.4);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-radius: 16px;
   border: 1px solid rgba(56, 189, 248, 0.1);
