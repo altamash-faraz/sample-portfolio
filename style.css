@@ -1190,21 +1190,35 @@ body {
 }
 
 .hero-name {
-  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-size: clamp(3.5rem, 9vw, 7rem);
   font-weight: 700;
   margin-bottom: var(--space-8);
   letter-spacing: -0.02em;
   line-height: 1.1;
   
-  /* Clean gradient text effect */
+  /* Enhanced gradient text effect */
   background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 25%, #94a3b8 75%, #64748b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
   
+  /* Cool animations */
+  animation: fadeInUp 1.5s ease-out, textGlow 3s ease-in-out infinite alternate;
+  transform-origin: center;
+  
+  /* Hover effect */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  
   /* Subtle glow effect */
   filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.2));
+}
+
+.hero-name:hover {
+  animation: textPulse 0.8s ease-in-out, textGlow 3s ease-in-out infinite alternate;
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));
 }
 
 .hero-title {
@@ -2283,7 +2297,7 @@ section {
   }
 
   .hero-name {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
   }
 
   .hero-title {
@@ -2551,6 +2565,36 @@ html {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Cool name animations */
+@keyframes textGlow {
+  0% {
+    filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4)) drop-shadow(0 0 60px rgba(56, 189, 248, 0.1));
+  }
+}
+
+@keyframes textPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
