@@ -1190,7 +1190,7 @@ body {
 }
 
 .hero-name {
-  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
   font-weight: 700;
   margin-bottom: var(--space-8);
   letter-spacing: -0.02em;
@@ -2297,7 +2297,7 @@ section {
   }
 
   .hero-name {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
   }
 
   .hero-title {
