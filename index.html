@@ -54,6 +54,10 @@
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>"
     />
 
+    <!-- Performance Optimization -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    
     <link rel="stylesheet" href="style.css" />
     
     <!-- Direct Navigation Script -->
@@ -111,6 +115,9 @@
     <link rel="preload" href="app.js" as="script" />
   </head>
   <body>
+    <!-- Skip Navigation for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <!-- Navigation Menu - Updated with working onclick handlers -->
     <nav class="navbar">
       <div class="nav-container">
@@ -137,6 +144,7 @@
     </nav>
 
     <!-- Hero Section -->
+    <main id="main-content">
     <section id="home" class="hero">
       <div class="hero-content">
         <div class="hero-text">
@@ -953,6 +961,7 @@
         </div>
       </div>
     </footer>
+    </main>
 
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop">

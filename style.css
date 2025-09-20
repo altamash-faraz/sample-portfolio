@@ -4,6 +4,24 @@
  * Author: Altamash Faraz
  */
 
+/* Accessibility: Skip Navigation Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
 :root {
   /* Enhanced Modern Dark Theme Color Palette */
   --color-white: rgba(255, 255, 255, 1);
