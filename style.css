@@ -1042,7 +1042,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 140px;
+  height: 75px;
 }
 
 .nav-logo .logo-link {
@@ -1051,9 +1051,9 @@ body {
 }
 
 .nav-logo .logo-image {
-  /* Large Rounded Logo Design */
-  width: 120px;
-  height: 120px;
+  /* Small Rounded Logo Design */
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   
   /* Circular shape */
@@ -1061,8 +1061,8 @@ body {
   
   /* Enhanced effects */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.2));
-  border: 3px solid rgba(56, 189, 248, 0.3);
+  filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.2));
+  border: 2px solid rgba(56, 189, 248, 0.3);
 }
 
 .nav-logo .logo-image:hover {
@@ -1212,7 +1212,7 @@ body {
 }
 
 .hero-name {
-  font-size: clamp(5rem, 12vw, 8rem);
+  font-size: clamp(6rem, 15vw, 10rem);
   font-weight: 700;
   margin-bottom: var(--space-8);
   letter-spacing: -0.02em;
@@ -2319,7 +2319,7 @@ section {
   }
 
   .hero-name {
-    font-size: 5rem;
+    font-size: 6rem;
   }
 
   .hero-title {
