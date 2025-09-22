@@ -1042,7 +1042,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 75px;
+  height: 85px;
 }
 
 .nav-logo .logo-link {
@@ -1050,7 +1050,27 @@ body {
   display: inline-block;
 }
 
+.nav-logo .logo-image {
+  /* Large Logo Design */
+  width: 120px;
+  height: auto;
+  max-height: 60px;
+  object-fit: contain;
+  
+  /* Enhanced effects */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.2));
+  border-radius: 8px;
+}
+
+.nav-logo .logo-image:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 6px 20px rgba(56, 189, 248, 0.4));
+}
+
+/* Keep the old AF text styling as fallback, but hide it */
 .nav-logo .logo-text {
+  display: none;
   font-size: 1.8rem;
   font-weight: 800;
   letter-spacing: -0.02em;
