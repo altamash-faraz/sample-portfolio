@@ -1068,54 +1068,9 @@ body {
   filter: drop-shadow(0 6px 20px rgba(56, 189, 248, 0.4));
 }
 
-/* Keep the old AF text styling as fallback, but hide it */
+/* Text logo fallback (hidden by default) */
 .nav-logo .logo-text {
   display: none;
-  font-size: 1.8rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  
-  /* Enhanced AF Logo Design */
-  background: linear-gradient(135deg, #38bdf8 0%, #8b5cf6 50%, #ec4899 100%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  animation: gradientShift 3s ease-in-out infinite;
-  position: relative;
-  
-  /* Circular background for logo */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%);
-  border: 2px solid transparent;
-  background-clip: padding-box;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.nav-logo .logo-text::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #38bdf8 0%, #8b5cf6 50%, #ec4899 100%);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.nav-logo:hover .logo-text {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-}
-
-.nav-logo:hover .logo-text::before {
-  opacity: 1;
 }
 
 @keyframes gradientShift {
