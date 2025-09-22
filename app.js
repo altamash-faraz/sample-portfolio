@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const closeModalBtn = modal.querySelector('#closeModalBtn');
         
         openResumeBtn.addEventListener('click', () => {
-            window.open('https://drive.google.com/drive/u/1/folders/14bt-xhnEKJfnGPJm1mYB5Ecx5aMnBv4w', '_blank');
+            window.open('https://drive.google.com/file/d/11tuThjdCpe5aDvRnwL2U-z_9GlD_jRKj/view?usp=drive_link', '_blank');
             document.body.removeChild(modal);
         });
         
@@ -935,9 +935,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Resume view button found:', resumeViewBtn);
         console.log('Resume download button found:', resumeDownloadBtn);
         
-        // Resume URLs - Updated to new Google Drive folder
-        const resumeViewUrl = 'https://drive.google.com/drive/u/1/folders/14bt-xhnEKJfnGPJm1mYB5Ecx5aMnBv4w';
-        const resumeDownloadUrl = 'https://drive.google.com/drive/u/1/folders/14bt-xhnEKJfnGPJm1mYB5Ecx5aMnBv4w';
+        // Resume URLs - Updated to specific resume file
+        const resumeViewUrl = 'https://drive.google.com/file/d/11tuThjdCpe5aDvRnwL2U-z_9GlD_jRKj/view?usp=drive_link';
+        const resumeDownloadUrl = 'https://drive.google.com/uc?export=download&id=11tuThjdCpe5aDvRnwL2U-z_9GlD_jRKj';
         
         if (resumeViewBtn) {
             resumeViewBtn.href = resumeViewUrl;
