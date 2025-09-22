@@ -1042,7 +1042,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 85px;
+  height: 140px;
 }
 
 .nav-logo .logo-link {
@@ -1051,21 +1051,24 @@ body {
 }
 
 .nav-logo .logo-image {
-  /* Large Logo Design */
+  /* Large Rounded Logo Design */
   width: 120px;
-  height: auto;
-  max-height: 60px;
-  object-fit: contain;
+  height: 120px;
+  object-fit: cover;
+  
+  /* Circular shape */
+  border-radius: 50%;
   
   /* Enhanced effects */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.2));
-  border-radius: 8px;
+  border: 3px solid rgba(56, 189, 248, 0.3);
 }
 
 .nav-logo .logo-image:hover {
   transform: scale(1.1);
   filter: drop-shadow(0 6px 20px rgba(56, 189, 248, 0.4));
+  border-color: rgba(56, 189, 248, 0.6);
 }
 
 /* Text logo fallback (hidden by default) */
