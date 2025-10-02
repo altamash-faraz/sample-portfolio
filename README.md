@@ -2,13 +2,8 @@
 
 A modern, responsive portfolio website showcasing my work as a Python Developer and Computer Engineer.
 
-## 🔗 Quick Access
 
-|                    🌐 **Live Portfolio**                     |                    📂 **Repository**                     |                   👤 **Profile**                    |
-| :----------------------------------------------------------: | :------------------------------------------------------: | :-------------------------------------------------: |
-| [Visit Website](https://altamashfaraz.me) | [View Code](https://github.com/altamashfaraz.me) | [GitHub Profile](https://github.com/altamash-faraz) |
-
-🌐 **Live Portfolio:** [https://github.com/altamashfaraz.me](https://altamashfaraz.me)
+This is just a sample portfolio .
 
 ## 🚀 Features
 
