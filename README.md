@@ -34,19 +34,6 @@ This is just a sample portfolio .
 - **Animation**: CSS transitions and JavaScript intersection observers
 - **Performance**: Lazy loading, resource preloading
 
-## 📊 Projects Featured
-
-1. **AI Resume Screening System** - Machine learning-powered recruitment tool with 95%+ accuracy
-   - Live Demo: [ai-resume-screen.streamlit.app](https://ai-resume-screen.streamlit.app)
-   - Technology: Python, Streamlit, TF-IDF, Machine Learning
-   
-2. **VisiOCR** - OCR-based visitor management system with real-time processing
-   - Live Demo: [visiocr-y4rx.onrender.com](https://visiocr-y4rx.onrender.com)
-   - Technology: Python, Django, Tesseract OCR, OpenCV
-   - 
-3. **VotePro** - Secure polling application with OTP verification
-4. **Travel Blog Website** - Responsive frontend showcase
-
 ## 🎨 Design Features
 
 - Custom color scheme with CSS variables
