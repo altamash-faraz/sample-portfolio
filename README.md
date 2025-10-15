@@ -17,8 +17,6 @@ This is just a sample portfolio .
 
 ## 📱 Sections
 
-- **Hero**: Introduction with call-to-action buttons
-- **About**: Personal background and highlights
 - **Experience**: Professional timeline with achievements
 - **Projects**: Showcase of key projects with live demos
 - **Skills**: Technical skills organized by category
